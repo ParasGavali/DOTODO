@@ -1,101 +1,36 @@
-# DOTODO
-
-> **Think it. Do it.**
-
-From Todo to Done.
-
-DOTODO is a production-quality productivity application with zero-friction task capture, AI-assisted planning, and DROP-style ownership — no mandatory accounts, no passwords, just your Owner Key.
-
-## Tech Stack
-
-- **Next.js 14+** (App Router, TypeScript)
-- **React 18+** with Tailwind CSS
-- **MongoDB** (Mongoose ODM)
-- **Radix UI** for accessible components
-- **Zustand** + **TanStack Query** for state
-- **Socket.IO** for real-time collaboration
-- **OpenAI** for AI task breakdown and planning
-- **@dnd-kit** for drag-and-drop
-- **Framer Motion** for animations
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
 
-### Prerequisites
-
-- Node.js 18+
-- MongoDB Atlas cluster (or local MongoDB)
-- OpenAI API key (optional, for AI features)
-
-### Setup
-
-```bash
-git clone https://github.com/ParasGavali/DOTODO.git
-cd DOTODO
-npm install
-```
-
-### Environment Variables
-
-Copy `.env.example` to `.env.local` and fill in:
-
-```env
-MONGODB_URI="mongodb+srv://..."
-SESSION_SECRET="a-random-32-char-string"
-SESSION_MAX_AGE_DAYS=30
-NEXT_PUBLIC_APP_URL="http://localhost:3000"
-OPENAI_API_KEY="sk-..."          # Optional
-```
-
-### Development
+First, run the development server:
 
 ```bash
 npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-### Build
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-```bash
-npm run build
-npm start
-```
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## How It Works
+## Learn More
 
-1. **Create a Space** — Enter your name, get an Owner Key
-2. **Save your Key** — It won't be shown again
-3. **Access your Space** — Enter your Owner Key to log in
-4. **Add Tasks** — Type and press Enter. Done.
-5. **Organize Later** — Projects, labels, priorities, dates
+To learn more about Next.js, take a look at the following resources:
 
-## Features
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-- Zero-friction task capture
-- Inbox, Today, Upcoming, Calendar views
-- Projects and labels
-- Subtask hierarchy
-- Recurring tasks and reminders
-- AI task breakdown and daily planning
-- Natural language task creation
-- Focus mode with timer
-- Secure sharing without accounts
-- Real-time collaboration
-- Dark theme by default
-- Keyboard shortcuts
-- Mobile-responsive
-- Data export (JSON/CSV)
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Project Plan
+## Deploy on Vercel
 
-See [BUILD_PLAN.md](BUILD_PLAN.md) for the complete project plan including:
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-- Full database schema
-- Project structure
-- 14 build phases
-- Design system
-- Security rules
-
-## License
-
-Private — All rights reserved.
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
