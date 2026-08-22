@@ -9,7 +9,7 @@ export interface ISpaceMember extends Document {
 }
 
 const spaceMemberSchema = new Schema<ISpaceMember>({
-  spaceId: { type: Schema.Types.ObjectId, ref: "Space", required: true, index: true },
+  spaceId: { type: Schema.Types.ObjectId, ref: "Space", required: true },
   ownerId: { type: Schema.Types.ObjectId, ref: "Owner", required: true, index: true },
   role: { type: String, enum: ["owner", "editor", "viewer"], default: "viewer" },
   createdAt: { type: Date, default: Date.now },

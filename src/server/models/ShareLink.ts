@@ -13,7 +13,7 @@ export interface IShareLink extends Document {
 }
 
 const shareLinkSchema = new Schema<IShareLink>({
-  spaceId: { type: Schema.Types.ObjectId, ref: "Space", required: true, index: true },
+  spaceId: { type: Schema.Types.ObjectId, ref: "Space", required: true },
   projectId: { type: Schema.Types.ObjectId, ref: "Project", default: null },
   tokenHash: { type: String, required: true, unique: true, index: true },
   permission: { type: String, enum: ["editor", "viewer"], default: "viewer" },

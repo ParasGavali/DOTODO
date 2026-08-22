@@ -33,6 +33,7 @@ export default function CreateSpacePage() {
       }
 
       setOwnerKey(data.ownerKey);
+      localStorage.setItem("dotodo_owner_key", data.ownerKey);
     } catch {
       setError("Something went wrong. Try again.");
     } finally {

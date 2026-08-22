@@ -15,7 +15,7 @@ export interface IProject extends Document {
 
 const projectSchema = new Schema<IProject>(
   {
-    spaceId: { type: Schema.Types.ObjectId, ref: "Space", required: true, index: true },
+    spaceId: { type: Schema.Types.ObjectId, ref: "Space", required: true },
     name: { type: String, required: true, trim: true, maxlength: 200 },
     description: { type: String, default: "" },
     icon: { type: String, default: "folder" },

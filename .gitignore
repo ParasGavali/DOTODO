@@ -43,6 +43,11 @@ next-env.d.ts
 .DS_Store
 Thumbs.db
 *.pem
+dev.log
+
+# auto-generated agent files
+AGENTS.md
+CLAUDE.md
 
 # IDE
 .vscode/

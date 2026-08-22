@@ -46,6 +46,7 @@ export default function AccessSpacePage() {
         return;
       }
 
+      localStorage.setItem("dotodo_owner_key", key);
       router.push("/inbox");
     } catch {
       setError("Something went wrong. Try again.");

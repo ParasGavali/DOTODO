@@ -9,7 +9,7 @@ export interface ILabel extends Document {
 }
 
 const labelSchema = new Schema<ILabel>({
-  spaceId: { type: Schema.Types.ObjectId, ref: "Space", required: true, index: true },
+  spaceId: { type: Schema.Types.ObjectId, ref: "Space", required: true },
   name: { type: String, required: true, trim: true, maxlength: 50 },
   color: { type: String, default: "#8b5cf6" },
   createdAt: { type: Date, default: Date.now },

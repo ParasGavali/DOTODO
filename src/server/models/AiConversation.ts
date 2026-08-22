@@ -24,7 +24,7 @@ const aiMessageSchema = new Schema<IAiMessage>(
 );
 
 const aiConversationSchema = new Schema<IAiConversation>({
-  spaceId: { type: Schema.Types.ObjectId, ref: "Space", required: true, index: true },
+  spaceId: { type: Schema.Types.ObjectId, ref: "Space", required: true },
   taskId: { type: Schema.Types.ObjectId, ref: "Task", default: null },
   messages: { type: [aiMessageSchema], default: [] },
   createdAt: { type: Date, default: Date.now },

@@ -10,9 +10,9 @@ export interface IReminder extends Document {
 }
 
 const reminderSchema = new Schema<IReminder>({
-  taskId: { type: Schema.Types.ObjectId, ref: "Task", required: true, index: true },
-  remindAt: { type: Date, required: true, index: true },
-  sent: { type: Boolean, default: false, index: true },
+  taskId: { type: Schema.Types.ObjectId, ref: "Task", required: true },
+  remindAt: { type: Date, required: true },
+  sent: { type: Boolean, default: false },
   type: { type: String, enum: ["notification", "email"], default: "notification" },
   createdAt: { type: Date, default: Date.now },
 });
