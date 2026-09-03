@@ -7,21 +7,26 @@ import { ShareDialog } from "@/components/share/share-dialog";
 export default function SettingsPage() {
   const [activeTab, setActiveTab] = useState("general");
   const [spaceId, setSpaceId] = useState<string | null>(null);
+  const [roomId, setRoomId] = useState<string | null>(null);
   const [showShare, setShowShare] = useState(false);
   const [ownerKey, setOwnerKey] = useState("");
-  const [copied, setCopied] = useState(false);
+  const [copied, setCopied] = useState("");
 
   useEffect(() => {
-    fetch("/api/auth/session").then(r => r.json()).then(d => setSpaceId(d.spaceId));
+    fetch("/api/auth/session").then(r => r.json()).then(d => {
+      setSpaceId(d.spaceId);
+      setRoomId(d.roomId ?? null);
+    });
     const key = localStorage.getItem("dotodo_owner_key");
     if (key) setOwnerKey(key);
   }, []);
 
-  const handleCopy = () => {
-    if (ownerKey) {
-      navigator.clipboard.writeText(ownerKey);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+  const handleCopy = (what: "key" | "room") => {
+    const value = what === "key" ? ownerKey : roomId ?? "";
+    if (value) {
+      navigator.clipboard.writeText(value);
+      setCopied(what);
+      setTimeout(() => setCopied(""), 2000);
     }
   };
 
@@ -52,6 +57,25 @@ export default function SettingsPage() {
           {activeTab === "general" && (
             <div className="space-y-6">
               <div className="rounded-lg border border-border bg-surface p-4">
+                <h3 className="text-sm font-medium mb-2">Room ID</h3>
+                <p className="text-xs text-text-dim mb-3">Share this Room ID with others so they can find and join your space.</p>
+                {roomId ? (
+                  <div className="flex items-center gap-3">
+                    <div className="flex-1 rounded-lg border border-border bg-bg px-4 py-3 font-mono text-lg font-bold tracking-widest text-primary-1 select-all">
+                      {roomId}
+                    </div>
+                    <button
+                      onClick={() => handleCopy("room")}
+                      className="shrink-0 rounded-lg border border-border px-4 py-3 text-sm font-medium text-text-muted transition-colors hover:border-primary hover:text-primary"
+                    >
+                      {copied === "room" ? "Copied!" : "Copy"}
+                    </button>
+                  </div>
+                ) : (
+                  <p className="text-xs text-text-dim">No Room ID found for this space.</p>
+                )}
+              </div>
+              <div className="rounded-lg border border-border bg-surface p-4">
                 <h3 className="text-sm font-medium mb-2">Owner Key</h3>
                 <p className="text-xs text-text-dim mb-3">Your Owner Key is the only way to access your space. Keep it safe.</p>
                 {ownerKey ? (
@@ -60,10 +84,10 @@ export default function SettingsPage() {
                       {ownerKey}
                     </div>
                     <button
-                      onClick={handleCopy}
+                      onClick={() => handleCopy("key")}
                       className="shrink-0 rounded-lg border border-border px-4 py-3 text-sm font-medium text-text-muted transition-colors hover:border-primary hover:text-primary"
                     >
-                      {copied ? "Copied!" : "Copy"}
+                      {copied === "key" ? "Copied!" : "Copy"}
                     </button>
                   </div>
                 ) : (

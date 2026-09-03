@@ -7,9 +7,10 @@ export default function CreateSpacePage() {
   const router = useRouter();
   const [name, setName] = useState("");
   const [ownerKey, setOwnerKey] = useState<string | null>(null);
+  const [roomId, setRoomId] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [copied, setCopied] = useState(false);
+  const [copied, setCopied] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,6 +34,7 @@ export default function CreateSpacePage() {
       }
 
       setOwnerKey(data.ownerKey);
+      setRoomId(data.roomId);
       localStorage.setItem("dotodo_owner_key", data.ownerKey);
     } catch {
       setError("Something went wrong. Try again.");
@@ -41,11 +43,12 @@ export default function CreateSpacePage() {
     }
   };
 
-  const handleCopy = () => {
-    if (ownerKey) {
-      navigator.clipboard.writeText(ownerKey);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+  const handleCopy = (type: "room" | "key") => {
+    const value = type === "room" ? roomId : ownerKey;
+    if (value) {
+      navigator.clipboard.writeText(value);
+      setCopied(type);
+      setTimeout(() => setCopied(""), 2000);
     }
   };
 
@@ -53,7 +56,7 @@ export default function CreateSpacePage() {
     router.push("/inbox");
   };
 
-  // Step 2: Show Owner Key
+  // Step 3: Show Owner Key
   if (ownerKey) {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center px-4">
@@ -71,10 +74,10 @@ export default function CreateSpacePage() {
           </div>
 
           <button
-            onClick={handleCopy}
+            onClick={() => handleCopy("key")}
             className="mb-6 w-full rounded-lg border border-border py-2.5 text-sm text-text-muted transition-all hover:border-primary hover:text-primary"
           >
-            {copied ? "Copied!" : "Copy to clipboard"}
+            {copied === "key" ? "Copied!" : "Copy to clipboard"}
           </button>
 
           <div className="mb-6 rounded-lg border border-warning/20 bg-warning/5 p-4">
@@ -88,6 +91,41 @@ export default function CreateSpacePage() {
             className="w-full rounded-lg bg-primary py-3.5 font-medium text-white transition-all hover:bg-primary-dim active:scale-[0.98]"
           >
             Enter my space
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // Step 2: Show Room ID
+  if (roomId) {
+    return (
+      <div className="flex min-h-screen flex-col items-center justify-center px-4">
+        <div className="animate-fade-in w-full max-w-md text-center">
+          <div className="mb-6 text-5xl">&#x1F3E0;</div>
+          <h1 className="mb-2 text-2xl font-bold">Your Room ID</h1>
+          <p className="mb-8 text-text-muted">
+            Share this Room ID with others so they can find and join your space.
+          </p>
+
+          <div className="mb-4 flex items-center justify-center gap-2 rounded-lg border border-border bg-surface p-4">
+            <code className="select-all font-mono text-xl font-bold tracking-widest text-primary-1">
+              {roomId}
+            </code>
+          </div>
+
+          <button
+            onClick={() => handleCopy("room")}
+            className="mb-6 w-full rounded-lg border border-border py-2.5 text-sm text-text-muted transition-all hover:border-primary hover:text-primary"
+          >
+            {copied === "room" ? "Copied!" : "Copy Room ID"}
+          </button>
+
+          <button
+            onClick={handleContinue}
+            className="w-full rounded-lg bg-primary py-3.5 font-medium text-white transition-all hover:bg-primary-dim active:scale-[0.98]"
+          >
+            Continue
           </button>
         </div>
       </div>

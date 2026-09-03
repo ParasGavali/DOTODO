@@ -17,6 +17,7 @@ export async function POST(req: NextRequest) {
     const response = NextResponse.json({
       ownerKey: result.ownerKey,
       spaceId: result.spaceId,
+      roomId: result.roomId,
     });
 
     const token = await createSession(result.ownerId);

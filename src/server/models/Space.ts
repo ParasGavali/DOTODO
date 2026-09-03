@@ -4,6 +4,7 @@ export interface ISpace extends Document {
   _id: mongoose.Types.ObjectId;
   ownerId: mongoose.Types.ObjectId;
   name: string;
+  roomId?: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -12,6 +13,7 @@ const spaceSchema = new Schema<ISpace>(
   {
     ownerId: { type: Schema.Types.ObjectId, ref: "Owner", required: true, index: true },
     name: { type: String, required: true, trim: true, maxlength: 100 },
+    roomId: { type: String, unique: true, sparse: true },
   },
   { timestamps: true }
 );

@@ -47,3 +47,10 @@ export async function verifyShareToken(token: string, hash: string): Promise<boo
 export function isValidOwnerKey(key: string): boolean {
   return /^[A-F0-9]{4}-[A-F0-9]{4}$/.test(key);
 }
+
+// --- Room ID ---
+
+export function generateRoomId(): string {
+  const raw = crypto.randomBytes(6).toString("hex").toUpperCase();
+  return `${raw.slice(0, 4)}-${raw.slice(4, 8)}-${raw.slice(8, 12)}`;
+}

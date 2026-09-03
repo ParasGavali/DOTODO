@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import { connectDB } from "@/server/db";
 import { Session } from "@/server/models/Session";
-import { hashSessionToken, generateSessionToken, hashOwnerKey, generateOwnerKey, verifyOwnerKey } from "@/lib/crypto";
+import { hashSessionToken, generateSessionToken, hashOwnerKey, generateOwnerKey, verifyOwnerKey, generateRoomId } from "@/lib/crypto";
 import { SESSION_MAX_AGE_DAYS } from "@/lib/constants";
 import { Owner } from "@/server/models/Owner";
 import { Space } from "@/server/models/Space";
@@ -15,21 +15,22 @@ export interface AuthUser {
   sessionId: string;
 }
 
-export async function createSpace(name: string): Promise<{ ownerKey: string; spaceId: string; ownerId: string }> {
+export async function createSpace(name: string): Promise<{ ownerKey: string; spaceId: string; roomId: string; ownerId: string }> {
   await connectDB();
 
   const ownerKey = generateOwnerKey();
   const ownerKeyHash = await hashOwnerKey(ownerKey);
 
   const owner = await Owner.create({ name, ownerKeyHash });
-  const space = await Space.create({ ownerId: owner._id, name });
+  const roomId = generateRoomId();
+  const space = await Space.create({ ownerId: owner._id, name, roomId });
   await SpaceMember.create({ spaceId: space._id, ownerId: owner._id, role: "owner" });
 
   for (const proj of DEFAULT_PROJECTS) {
     await Project.create({ spaceId: space._id, ...proj });
   }
 
-  return { ownerKey, spaceId: space._id.toString(), ownerId: owner._id.toString() };
+  return { ownerKey, spaceId: space._id.toString(), roomId, ownerId: owner._id.toString() };
 }
 
 export async function accessSpace(ownerKey: string): Promise<{ spaceId: string; ownerId: string } | null> {
