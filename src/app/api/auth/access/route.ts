@@ -34,8 +34,12 @@ export async function POST(req: NextRequest) {
     });
 
     return response;
-  } catch (error) {
+  } catch (error: unknown) {
     console.error("Access space error:", error);
+    const msg = error instanceof Error ? error.message : "";
+    if (msg.includes("ECONNREFUSED") || msg.includes("ETIMEOUT") || msg.includes("ServerSelection") || msg.includes("ReplicaSetNoPrimary")) {
+      return NextResponse.json({ error: "Database connection failed. Please try again later." }, { status: 503 });
+    }
     return NextResponse.json({ error: "Failed to access space. Try again." }, { status: 500 });
   }
 }
